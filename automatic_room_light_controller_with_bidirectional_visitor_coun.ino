@@ -60,7 +60,7 @@ void loop() {
   case 0:
     lcd.setCursor(0, 0);
     lcd.print("SCAN YOUR RFID");
-    lcd.setCursor(1, 2);
+    lcd.setCursor(2, 1);
     lcd.print("DOOR LOCKED");
     
     if ( ! rfid.PICC_IsNewCardPresent())
@@ -75,9 +75,9 @@ void loop() {
     if (tag == "3512763512"){
       digitalWrite(relaylock, LOW);
       tag = "";
-      lcd.setCursor(1, 0);
+      lcd.setCursor(0, 1);
       lcd.print("               ");
-      lcd.setCursor(1, 2);
+      lcd.setCursor(2, 1);
       lcd.print("Access Success");
       delay(2000); // 2 sec
       Var = 1;
@@ -85,9 +85,9 @@ void loop() {
       statelcd3 = 0;
       }
     else {
-      lcd.setCursor(1, 2);
+      lcd.setCursor(2, 1);
       lcd.print("               ");
-      lcd.setCursor(1, 2);
+      lcd.setCursor(2, 1);
       lcd.print("Error.....");
       delay(3000);
       }
@@ -162,20 +162,20 @@ if (statelcd == 1)
   if (statelcd3 == 0){
     lcd.setCursor(0, 0);
     lcd.print("                ");
-    lcd.setCursor(1, 0);
+    lcd.setCursor(0, 1);
     lcd.print("                ");
     lcd.setCursor(0, 0);
     lcd.print("Counter Visitor");
-    lcd.setCursor(1, 0);
+    lcd.setCursor(0, 1);
     lcd.print("IN : ");
-    lcd.setCursor(1, 5);
+    lcd.setCursor(5, 1);
     lcd.print(counter);
     statelcd3 = 1;
     }
   if (statelcd2 == 1){
-    lcd.setCursor(1, 5);
+    lcd.setCursor(5, 1);
     lcd.print("   ");
-    lcd.setCursor(1, 5);
+    lcd.setCursor(5, 1);
     lcd.print(counter);
     statelcd2 = 0;
     }
