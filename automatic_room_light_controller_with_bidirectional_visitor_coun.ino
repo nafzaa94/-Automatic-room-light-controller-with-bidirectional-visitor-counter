@@ -59,6 +59,10 @@ void loop() {
   switch (Var) {
   case 0:
     lcd.setCursor(0, 0);
+    lcd.print("                ");
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+    lcd.setCursor(0, 0);
     lcd.print("SCAN YOUR RFID");
     lcd.setCursor(2, 1);
     lcd.print("DOOR LOCKED");
