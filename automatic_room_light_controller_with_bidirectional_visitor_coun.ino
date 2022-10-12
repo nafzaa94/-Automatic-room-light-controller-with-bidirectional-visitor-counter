@@ -54,89 +54,31 @@ void setup() {
 
 void loop() {
   valueirsensor1 = digitalRead(irsensor1);
-  valueirsensor2 = digitalRead(valueirsensor2);
+  valueirsensor2 = digitalRead(irsensor2);
 
-  switch (Var) {
-  case 0:
-    lcd.setCursor(0, 0);
-    lcd.print("                ");
-    lcd.setCursor(0, 1);
-    lcd.print("                ");
-    lcd.setCursor(0, 0);
-    lcd.print("SCAN YOUR RFID");
-    lcd.setCursor(2, 1);
-    lcd.print("DOOR LOCKED");
-    
-    if ( ! rfid.PICC_IsNewCardPresent())
-    return;
-    if (rfid.PICC_ReadCardSerial()) {
-      for (byte i = 0; i < 4; i++) {
-        tag += rfid.uid.uidByte[i];
-      }
-      Serial.println(tag);
-    }
-
-    if (tag == "3512763512"){
-      digitalWrite(relaylock, LOW);
-      tag = "";
-      lcd.setCursor(0, 1);
-      lcd.print("               ");
-      lcd.setCursor(2, 1);
-      lcd.print("Access Success");
-      delay(2000); // 2 sec
-      Var = 1;
-      statelcd = 1;
-      statelcd3 = 0;
-      }
-    else {
-      lcd.setCursor(2, 1);
-      lcd.print("               ");
-      lcd.setCursor(2, 1);
-      lcd.print("Error.....");
-      delay(3000);
-      }
-    
-    break;
-  case 1:
-    if ( ! rfid.PICC_IsNewCardPresent())
-    return;
-    if (rfid.PICC_ReadCardSerial()) {
-      for (byte i = 0; i < 4; i++) {
-        tag += rfid.uid.uidByte[i];
-      }
-      Serial.println(tag);
-    }
-
-    if (tag == "3512763512"){
-      digitalWrite(relaylock, HIGH);
-      tag = "";
-      delay(2000); // 2 sec
-      }
-    Var = 0;
-    break;
-}
-
-if (valueirsensor1 == LOW){
-   statelcd2 = 1;
+  if (valueirsensor1 == LOW){
+//      Serial.println("sensor 1");
+      statelcd2 = 1;
       if(state == 3){
         Serial.println("out");
         state = 4;
         }
-      else {
+      else if (state == 0) {
         state = 1;
         }
     }
 
 if (valueirsensor2 == LOW){
-  statelcd2 = 1;
-  if (state == 1){
-    Serial.println("in");
-    state = 2;
+//      Serial.println("sensor 2");
+      statelcd2 = 1;
+      if (state == 1){
+        Serial.println("in");
+        state = 2;
+        }
+      else if (state == 0) {
+        state = 3;
+        }
     }
-  else {
-    state = 3;
-    }
-  }
 
 if (state == 2){
   counter++;
@@ -183,4 +125,65 @@ if (statelcd == 1)
     lcd.print(counter);
     statelcd2 = 0;
     }
+
+  switch (Var) {
+  case 0:
+    lcd.setCursor(0, 0);
+    lcd.print("                ");
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+    lcd.setCursor(0, 0);
+    lcd.print("SCAN YOUR RFID");
+    lcd.setCursor(2, 1);
+    lcd.print("DOOR LOCKED");
+    
+    if ( ! rfid.PICC_IsNewCardPresent())
+    return;
+    if (rfid.PICC_ReadCardSerial()) {
+      for (byte i = 0; i < 4; i++) {
+        tag += rfid.uid.uidByte[i];
+      }
+      Serial.println(tag);
+    }
+
+    if (tag == "1452497836"){
+      digitalWrite(relaylock, LOW);
+      tag = "";
+      lcd.setCursor(0, 1);
+      lcd.print("               ");
+      lcd.setCursor(2, 1);
+      lcd.print("Access Success");
+      delay(2000); // 2 sec
+      Var = 1;
+      statelcd = 1;
+      statelcd3 = 0;
+      }
+    else {
+      lcd.setCursor(2, 1);
+      lcd.print("               ");
+      lcd.setCursor(2, 1);
+      lcd.print("Error.....");
+      delay(3000);
+      }
+    
+    break;
+  case 1:
+    if ( ! rfid.PICC_IsNewCardPresent())
+    return;
+    if (rfid.PICC_ReadCardSerial()) {
+      for (byte i = 0; i < 4; i++) {
+        tag += rfid.uid.uidByte[i];
+      }
+      Serial.println(tag);
+    }
+
+    if (tag == "1452497836"){
+      digitalWrite(relaylock, HIGH);
+      tag = "";
+      delay(2000); // 2 sec
+      }
+    Var = 0;
+    break;
+}
+
 }
