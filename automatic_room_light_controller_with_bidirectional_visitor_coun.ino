@@ -83,11 +83,13 @@ if (valueirsensor2 == LOW){
 if (state == 2){
   counter++;
   state = 0;
+  delay(3000);
   }
 
 if (state == 4){
   counter--;
   state = 0;
+  delay(3000);
 
   if (counter < 0){
     counter = 0;
